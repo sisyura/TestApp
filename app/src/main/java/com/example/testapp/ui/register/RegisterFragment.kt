@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentNotificationsBinding
 import com.example.testapp.databinding.FragmentRegisterBinding
@@ -41,7 +42,7 @@ class RegisterFragment : Fragment() {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                parentFragmentManager.navigateTo(NotificationsFragment::class.java)
+                findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
             }
         }.addOnFailureListener { exception ->
             Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_LONG).show()
@@ -49,6 +50,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun goToLogin() {
-        parentFragmentManager.navigateTo(LoginFragment::class.java)
+        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
     }
 }

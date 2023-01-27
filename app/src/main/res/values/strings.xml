@@ -14,4 +14,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="auth">Авторизоваться</string>
+    <string name="enter_sum">Введите сумму</string>
+    <string name="ok">OK</string>
 </resources>

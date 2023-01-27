@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentNotificationsBinding
 import com.example.testapp.ui.login.LoginFragment
@@ -30,7 +32,7 @@ class NotificationsFragment : Fragment() {
             binding.textNotifications.text = it
         }
         binding.btnAuth.setOnClickListener{
-            parentFragmentManager.navigateTo(LoginFragment::class.java)
+            findNavController().navigate(R.id.action_navigation_notifications_to_loginFragment)
         }
     }
 }

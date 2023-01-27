@@ -1,6 +1,7 @@
 package com.example.testapp.ui.dashboard
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,12 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDashboardBinding.bind(view)
-        viewModel.text.observe(viewLifecycleOwner) {
-            binding.textDashboard.text = it
+        binding.apply {
+            viewModel.text.observe(viewLifecycleOwner) {
+                textDashboard.text = it
+            }
+            var sum = "${etSum.text.toString().replace(",", " ")} руб."
+            btnApply.setOnClickListener { textDashboard.text = "${etSum.text.toString().replace(",", " ")} руб." }
         }
     }
 }
