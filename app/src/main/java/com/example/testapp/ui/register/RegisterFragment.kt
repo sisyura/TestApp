@@ -40,12 +40,21 @@ class RegisterFragment : Fragment() {
         val email = binding.editTextEmailAddress.text.toString()
         val password = binding.editTextPassword.text.toString()
 
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
+        try {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
+                }
+            }.addOnFailureListener { exception ->
+                Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_LONG).show()
             }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(context, exception.localizedMessage, Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(
+                context,
+                "Введите адрес электронной почты и пароль.",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
