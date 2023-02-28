@@ -16,4 +16,5 @@
     <string name="auth">Авторизоваться</string>
     <string name="enter_sum">Введите сумму</string>
     <string name="ok">OK</string>
+    <string name="title_activity_compose">ComposeActivity</string>
 </resources>

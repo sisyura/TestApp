@@ -6,12 +6,6 @@
     app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.testapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.testapp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
@@ -50,4 +44,8 @@
             android:id="@+id/action_registerFragment_to_navigation_notifications"
             app:destination="@id/navigation_notifications" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.testapp.ui.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
