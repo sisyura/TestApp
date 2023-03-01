@@ -10,4 +10,9 @@ class DashboardViewModel : ViewModel() {
         value = "This is dashboard Fragment"
     }
     val text: LiveData<String> = _text
+
+    fun isValidEmail(currency: String?) =
+        currency?.let {
+            Regex("[1-9][0-9]{0,9}+[.,][0-9]{2}").matchEntire(it)
+        }
 }

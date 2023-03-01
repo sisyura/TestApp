@@ -1,6 +1,5 @@
 package com.example.testapp.ui.dashboard
 
-import android.R.attr.label
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import java.util.regex.Pattern
 
 
 class DashboardFragment : Fragment() {
@@ -32,7 +30,7 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 Sum()
@@ -40,39 +38,19 @@ class DashboardFragment : Fragment() {
         }
     }
 
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//            val sum = "${etSum.text.toString().replace(",", " ")} руб."
-//            btnApply.setOnClickListener { textDashboard.text = sum }
-//
-//    }
-
     @Preview
     @Composable
     fun Sum() {
 
-        fun isValidEmail(currency: String?) =
-            currency?.let {
-                Pattern
-                    .compile(
-                        "^[0-9]{9}+\\.[0-9]{2}",
-                        Pattern.CASE_INSENSITIVE
-                    ).matcher(it).find()
-            }
         var text by remember { mutableStateOf("") }
-        var showError by remember { mutableStateOf(false) }
+        var showError by remember { mutableStateOf(true) }
         var message by remember { mutableStateOf("") }
-        val isVisible by remember {
-            derivedStateOf {
-                message.isNotBlank()
-            }
-        }
+        val isVisible by remember { derivedStateOf { message.isNotBlank() } }
 
         BoxWithConstraints(
             contentAlignment = Alignment.Center
         ) {
-            ConstraintLayout() {
+            ConstraintLayout {
                 val (buttonElement, textElement, textFieldElement) = createRefs()
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -89,10 +67,10 @@ class DashboardFragment : Fragment() {
                         top.linkTo(textElement.bottom, margin = 8.dp)
                     }) {
                     OutlinedTextField(
-                        value = String(),
+                        value = message,
                         onValueChange = {
                             message = it
-                            showError = !isValidEmail(it)!!
+                            showError = viewModel.isValidEmail(it) == null
                         },
                         isError = showError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -127,7 +105,8 @@ class DashboardFragment : Fragment() {
                         onClick = {
                             text = "$message руб."
                             message = ""
-                        }
+                        },
+                        enabled = !showError
                     ) {
                         Text("Записать", fontSize = 25.sp)
                     }
