@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.compose.AsyncImage
 
-import com.example.testapp.entity.NewsItem
+import com.example.testapp.data.NewsItem
 
 class HomeFragment : Fragment() {
 

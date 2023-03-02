@@ -1,4 +1,4 @@
-package com.example.testapp.entity
+package com.example.testapp.data
 
 data class NewsItem(
     val title: String,

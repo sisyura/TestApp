@@ -3,7 +3,7 @@ package com.example.testapp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.testapp.entity.NewsItem
+import com.example.testapp.data.NewsItem
 
 class HomeViewModel : ViewModel() {
 
