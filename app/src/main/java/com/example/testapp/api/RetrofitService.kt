@@ -6,11 +6,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface RetrofitService {
 
-    @GET("api/characters")
-    suspend fun getCharacters() : AllCharacters
+    @GET("api/characters/")
+    suspend fun getCharacters(
+        @Query(value = "page") page: Int
+    ) : AllCharacters
 
     companion object {
         private const val BASE_URL = "https://rickandmortyapi.com/"

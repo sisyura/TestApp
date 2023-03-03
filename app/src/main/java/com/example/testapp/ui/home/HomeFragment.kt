@@ -16,6 +16,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
@@ -23,25 +24,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 
 import com.example.testapp.data.NewsItem
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var newsList : List<NewsItem>? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                newsList?.let { Conversation(it) }
-            }
-        }
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        return ComposeView(requireContext()).apply {
+//            setContent {
+//                newsList?.let { Conversation(it) }
+//            }
+//        }
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,7 +83,9 @@ class HomeFragment : Fragment() {
                     shape = MaterialTheme.shapes.small,
                     elevation = 1.dp,
                     color = surfaceColor,
-                    modifier = Modifier.animateContentSize().padding(1.dp)
+                    modifier = Modifier
+                        .animateContentSize()
+                        .padding(1.dp)
                 ) {
                     news.body?.let {
                         Text(

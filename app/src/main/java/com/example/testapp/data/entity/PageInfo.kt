@@ -6,8 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PageInfo(
-    @SerializedName("next")
-    val nextPage: String?,
-    @SerializedName("prev")
-    val prevPage: String?
+    @SerializedName("pages")
+    val totalPages: Int?
 ) : Parcelable

@@ -9,5 +9,5 @@ data class AllCharacters(
     @SerializedName("info")
     val pageInfo: PageInfo?,
     @SerializedName("results")
-    val itemCharacter: List<ItemCharacter?>?
+    val characters: List<ItemCharacter>
 ) : Parcelable

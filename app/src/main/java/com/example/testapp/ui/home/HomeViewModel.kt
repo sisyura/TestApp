@@ -1,11 +1,18 @@
 package com.example.testapp.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.example.testapp.data.NewsItem
+import com.example.testapp.data.RetrofitRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    var repository: RetrofitRepository
+): ViewModel() {
+
+    val charactersItems = repository.getSearchResultStream().cachedIn(viewModelScope)
 
     private val _newsList = MutableLiveData<List<NewsItem>>().apply {
         value = listOf(
