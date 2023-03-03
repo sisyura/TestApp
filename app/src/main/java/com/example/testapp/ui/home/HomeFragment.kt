@@ -30,28 +30,27 @@ import coil.compose.AsyncImage
 import com.example.testapp.data.NewsItem
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+//    private val viewModel: HomeViewModel by viewModels()
     private var newsList : List<NewsItem>? = null
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return ComposeView(requireContext()).apply {
-//            setContent {
-//                newsList?.let { Conversation(it) }
-//            }
-//        }
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                Conversation()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.newsList.observe(viewLifecycleOwner) {
-            newsList = it
-        }
+//        viewModel.newsList.observe(viewLifecycleOwner) {
+//            newsList = it
+//        }
     }
 
     @Composable
@@ -101,10 +100,17 @@ class HomeFragment : Fragment() {
     }
 
     @Composable
-    fun Conversation(allNews: List<NewsItem>) {
-        LazyColumn(modifier = Modifier.padding(bottom = 56.dp)) {
-            items(allNews) { news ->
-                MessageCard(news)
+    fun Conversation(viewModel: HomeViewModel = hiltViewModel()) {
+//        val character = viewModel.charactersItems
+        val list = viewModel.newsList.observeAsState()
+        list.value?.let {
+            newsList = it
+        }
+        newsList?.let {
+            LazyColumn(modifier = Modifier.padding(bottom = 56.dp)) {
+                items(it) { news ->
+                    MessageCard(news)
+                }
             }
         }
     }
