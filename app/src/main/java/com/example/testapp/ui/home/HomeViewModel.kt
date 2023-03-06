@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    var repository: RetrofitRepository
+    repository: RetrofitRepository
 ): ViewModel() {
 
     val charactersItems = repository.getSearchResultStream().cachedIn(viewModelScope)

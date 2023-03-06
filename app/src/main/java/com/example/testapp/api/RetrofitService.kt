@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface RetrofitService {
 
-    @GET("api/characters/")
+    @GET("api/character/")
     suspend fun getCharacters(
         @Query(value = "page") page: Int
     ) : AllCharacters

@@ -1,6 +1,8 @@
 package com.example.testapp.di
 
 import com.example.testapp.api.RetrofitService
+import com.example.testapp.data.RetrofitRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
