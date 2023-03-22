@@ -1,31 +1,32 @@
-package com.example.testapp.ui.home
+package com.example.testapp.ui.home.NewsDetail
 
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
 import coil.compose.AsyncImage
 import com.example.testapp.data.entity.ItemCharacter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsDetailFragment : Fragment() {
 
     private var character: ItemCharacter? = null
+    private val viewModel: NewsDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +55,7 @@ class NewsDetailFragment : Fragment() {
     @Composable
     fun CharacterItem(character: ItemCharacter) {
         ConstraintLayout {
-            val (avatar, name, nameCh, status, statusCh, species, speciesCh, gender, genderCh, origin, originCh, location, locationCh) = createRefs()
+            val (avatar, name, nameCh, status, statusCh, species, speciesCh, gender, genderCh, origin, originCh, location, locationCh, btnSave) = createRefs()
 
             AsyncImage(
                 model = character.image,
@@ -176,6 +177,15 @@ class NewsDetailFragment : Fragment() {
                     },
                     text = it
                 )
+            }
+
+            Button(
+                onClick = { viewModel.saveCharacter(character) },
+                modifier = Modifier.constrainAs(btnSave) {
+                    top.linkTo(avatar.bottom, margin = 8.dp)
+                    end.linkTo(parent.end, margin = 8.dp)
+                }) {
+                Text(text = viewModel.btnName(), fontSize = 10.sp)
             }
         }
 

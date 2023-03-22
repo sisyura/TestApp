@@ -49,7 +49,7 @@
         android:label="Стоимость" />
     <fragment
         android:id="@+id/newsDetailFragment"
-        android:name="com.example.testapp.ui.home.NewsDetailFragment"
+        android:name="com.example.testapp.ui.home.NewsDetail.NewsDetailFragment"
         android:label="NewsDetailFragment" >
     </fragment>
 </navigation>

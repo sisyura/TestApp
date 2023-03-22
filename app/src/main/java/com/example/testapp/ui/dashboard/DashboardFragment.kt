@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -12,19 +16,109 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import coil.compose.AsyncImage
+import com.example.testapp.R
+import com.example.testapp.data.entity.CharacterLocation
+import com.example.testapp.data.entity.CharacterOrigin
+import com.example.testapp.data.entity.ItemCharacter
+import com.example.testapp.data.entity.ItemCharacterDB
+import com.example.testapp.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
+
     private val viewModel: DashboardViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                Conversation()
+            }
+        }
+    }
+
+    @Composable
+    fun CharacterCard(characterDB: ItemCharacterDB) {
+        Row(modifier = Modifier
+            .padding(8.dp)
+            .clickable {
+                val character = ItemCharacter(characterDB.id, characterDB.name, characterDB.status, characterDB.species, characterDB.gender, CharacterOrigin(characterDB.origin), CharacterLocation(characterDB.location), characterDB.image)
+                val bundle = bundleOf("character" to character)
+                findNavController().navigate(R.id.newsDetailFragment, bundle)
+            }
+        ) {
+            AsyncImage(
+                model = characterDB.image,
+                contentDescription = "image",
+                modifier = Modifier
+                    .size(55.dp)
+                    .clip(CircleShape)
+                    .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                characterDB.name?.let {
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colors.secondaryVariant,
+                        style = MaterialTheme.typography.subtitle2
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    elevation = 1.dp
+                ) {
+                    characterDB.species?.let {
+                        Text(
+                            text = "$it id: ${characterDB.id}",
+                            modifier = Modifier.padding(all = 4.dp),
+                            style = MaterialTheme.typography.body2
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun Conversation() {
+        val characterItems by viewModel.allCharacter.collectAsState(initial = emptyList())
+        LazyColumn(modifier = Modifier.padding(bottom = 56.dp)) {
+            items(
+                count = characterItems.count(),
+                key = { index ->
+                    val character = characterItems[index]
+                    character?.id ?: ""
+                }
+            ) { index ->
+                val character = characterItems[index] ?: return@items
+                CharacterCard(characterDB = character)
+            }
+        }
+    }
+
+   /* private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -114,5 +208,5 @@ class DashboardFragment : Fragment() {
 
             }
         }
-    }
+    }*/
 }

@@ -3,16 +3,27 @@ package com.example.testapp.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.testapp.data.CharactersRepository
+import com.example.testapp.data.entity.ItemCharacterDB
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class DashboardViewModel : ViewModel() {
+@HiltViewModel
+class DashboardViewModel @Inject internal constructor(
+    repository: CharactersRepository
+): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
+    val allCharacter: Flow<List<ItemCharacterDB>> =
+        repository.getCharacters()
 
-    fun isValidEmail(currency: String?) =
-        currency?.let {
-            Regex("[1-9][0-9]{0,9}+[.,][0-9]{2}").matchEntire(it)
-        }
+//    private val _text = MutableLiveData<String>().apply {
+//        value = "This is dashboard Fragment"
+//    }
+//    val text: LiveData<String> = _text
+//
+//    fun isValidEmail(currency: String?) =
+//        currency?.let {
+//            Regex("[1-9][0-9]{0,9}+[.,][0-9]{2}").matchEntire(it)
+//        }
 }

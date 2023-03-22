@@ -39,7 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
-    private var newsList: List<NewsItem>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +48,6 @@ class HomeFragment : Fragment() {
             setContent {
                 Conversation()
             }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.newsList.observe(viewLifecycleOwner) {
-            newsList = it
         }
     }
 
