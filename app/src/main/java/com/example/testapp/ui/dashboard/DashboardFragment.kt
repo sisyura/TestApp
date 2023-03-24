@@ -59,9 +59,9 @@ class DashboardFragment : Fragment() {
         Row(modifier = Modifier
             .padding(8.dp)
             .clickable {
-                val character = ItemCharacter(characterDB.id, characterDB.name, characterDB.status, characterDB.species, characterDB.gender, CharacterOrigin(characterDB.origin), CharacterLocation(characterDB.location), characterDB.image)
+                val character = ItemCharacter(characterDB.id, characterDB.name, characterDB.status, characterDB.species, characterDB.gender, CharacterOrigin(characterDB.origin), CharacterLocation(characterDB.location), characterDB.image, true)
                 val bundle = bundleOf("character" to character)
-                findNavController().navigate(R.id.newsDetailFragment, bundle)
+                findNavController().navigate(R.id.action_navigation_dashboard_to_newsDetailFragment2, bundle)
             }
         ) {
             AsyncImage(
@@ -109,7 +109,7 @@ class DashboardFragment : Fragment() {
                 count = characterItems.count(),
                 key = { index ->
                     val character = characterItems[index]
-                    character?.id ?: ""
+                    character.id ?: ""
                 }
             ) { index ->
                 val character = characterItems[index] ?: return@items

@@ -15,4 +15,5 @@ data class ItemCharacterDB(
     val location : String?,
     val image : String?,
     val addDate : Long?,
+    var isSaved : Boolean = true
 )

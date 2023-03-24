@@ -33,6 +33,7 @@ import com.example.testapp.R
 
 import com.example.testapp.data.NewsItem
 import com.example.testapp.data.entity.ItemCharacter
+import com.valentinilk.shimmer.shimmer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,8 +57,10 @@ class HomeFragment : Fragment() {
         Row(modifier = Modifier
             .padding(8.dp)
             .clickable {
+                viewModel.isSaved(character.id)
+                character.isSaved = viewModel.isSaved
                 val bundle = bundleOf("character" to character)
-                findNavController().navigate(R.id.newsDetailFragment, bundle)
+                findNavController().navigate(R.id.action_navigation_home_to_newsDetailFragment, bundle)
             }
         ) {
             AsyncImage(
@@ -96,6 +99,8 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+
 
     @Composable
     fun Conversation() {

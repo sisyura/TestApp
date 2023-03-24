@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
@@ -179,13 +180,25 @@ class NewsDetailFragment : Fragment() {
                 )
             }
 
+            var saved by remember {
+                mutableStateOf(character.isSaved)
+            }
+
             Button(
-                onClick = { viewModel.saveCharacter(character) },
+                onClick = {
+                    saved = !saved
+                    character.isSaved = !character.isSaved
+                    viewModel.saveCharacter(character)
+                },
                 modifier = Modifier.constrainAs(btnSave) {
                     top.linkTo(avatar.bottom, margin = 8.dp)
                     end.linkTo(parent.end, margin = 8.dp)
-                }) {
-                Text(text = viewModel.btnName(), fontSize = 10.sp)
+                },
+                interactionSource = remember {
+                    MutableInteractionSource()
+                }
+            ) {
+                Text(text = if (saved) "Delete" else "Save", fontSize = 10.sp)
             }
         }
 

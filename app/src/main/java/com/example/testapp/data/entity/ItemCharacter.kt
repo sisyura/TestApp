@@ -22,4 +22,5 @@ data class ItemCharacter(
     val location : CharacterLocation?,
     @SerializedName("image")
     val image : String?,
+    var isSaved: Boolean = false
 ) : Parcelable

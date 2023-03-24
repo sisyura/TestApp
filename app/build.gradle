@@ -115,4 +115,7 @@ dependencies {
 
     testImplementation 'org.mockito:mockito-core:2.28.2'
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+
+    //Shimmer
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.4'
 }

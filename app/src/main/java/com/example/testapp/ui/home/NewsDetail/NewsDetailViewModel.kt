@@ -13,17 +13,6 @@ class NewsDetailViewModel @Inject constructor(
     private val repository: CharactersRepository
 ) : ViewModel(){
 
-    var isSaved = false
-
-    fun isSaved(characterId: Int) {
-        viewModelScope.launch {
-            isSaved = repository.isRowIsExist(characterId)
-        }
-    }
-
-    fun btnName () : String =
-        if (isSaved) "Delete" else "Save"
-
     fun saveCharacter(character: ItemCharacter) {
         viewModelScope.launch {
             try {
