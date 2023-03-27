@@ -69,21 +69,5 @@
     <fragment
         android:id="@+id/newsDetailFragment"
         android:name="com.example.testapp.ui.home.NewsDetail.NewsDetailFragment"
-        android:label="NewsDetailFragment" >
-        <action
-            android:id="@+id/action_newsDetailFragment_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_newsDetailFragment_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_newsDetailFragment_to_navigation_notifications"
-            app:destination="@id/navigation_notifications"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        android:label="NewsDetailFragment" />
 </navigation>
