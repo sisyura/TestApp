@@ -16,5 +16,14 @@
     <string name="auth">Авторизоваться</string>
     <string name="enter_sum">Введите сумму</string>
     <string name="ok">OK</string>
-    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="character_name">Character name</string>
+    <string name="character_info">Character info</string>
+    <string name="image">image</string>
+    <string name="hint_name">Имя:</string>
+    <string name="hint_gender">Гендер:</string>
+    <string name="hint_status">Статус:</string>
+    <string name="hint_species">Вид:</string>
+    <string name="hint_born">Место рождения:</string>
+    <string name="hint_location">Местонахождение:</string>
+    <string name="save">save</string>
 </resources>
