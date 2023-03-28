@@ -7,7 +7,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
-import androidx.annotation.Nullable
 import androidx.appcompat.widget.AppCompatImageView
 
 class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.OnGestureListener,
@@ -38,12 +37,12 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
         constructionDetails(context)
     }
 
-    constructor(context: Context, @Nullable attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         constructionDetails(context)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context!!,
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
         attrs,
         defStyleAttr
     )
@@ -78,12 +77,12 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
             if (originalWidth * presentScale <= mViewedWidth
                 || originalHeight * presentScale <= mViewedHeight
             ) {
-                myMatrix!!.postScale(
+                myMatrix?.postScale(
                     mScaleFactor, mScaleFactor, mViewedWidth / 2.toFloat(),
                     mViewedHeight / 2.toFloat()
                 )
             } else {
-                myMatrix!!.postScale(
+                myMatrix?.postScale(
                     mScaleFactor, mScaleFactor,
                     detector.focusX, detector.focusY
                 )
@@ -103,7 +102,7 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
         val factorX = mViewedWidth.toFloat() / mImageWidth.toFloat()
         val factorY = mViewedHeight.toFloat() / mImageHeight.toFloat()
         factor = factorX.coerceAtMost(factorY)
-        myMatrix!!.setScale(factor, factor)
+        myMatrix?.setScale(factor, factor)
 
         // Centering the image
         var repeatedYSpace = (mViewedHeight.toFloat()
@@ -112,20 +111,18 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
                 - factor * mImageWidth.toFloat())
         repeatedYSpace /= 2.toFloat()
         repeatedXSpace /= 2.toFloat()
-        myMatrix!!.postTranslate(repeatedXSpace, repeatedYSpace)
+        myMatrix?.postTranslate(repeatedXSpace, repeatedYSpace)
         originalWidth = mViewedWidth - 2 * repeatedXSpace
         originalHeight = mViewedHeight - 2 * repeatedYSpace
         imageMatrix = myMatrix
     }
     fun fittedTranslation() {
-        myMatrix!!.getValues(matrixValue)
-        val translationX =
-            matrixValue!![android.graphics.Matrix.MTRANS_X]
-        val translationY =
-            matrixValue!![android.graphics.Matrix.MTRANS_Y]
+        myMatrix?.getValues(matrixValue)
+        val translationX = requireNotNull(matrixValue?.get(android.graphics.Matrix.MTRANS_X))
+        val translationY = requireNotNull(matrixValue?.get(android.graphics.Matrix.MTRANS_Y))
         val fittedTransX = getFittedTranslation(translationX, mViewedWidth.toFloat(), originalWidth * presentScale)
         val fittedTransY = getFittedTranslation(translationY, mViewedHeight.toFloat(), originalHeight * presentScale)
-        if (fittedTransX != 0f || fittedTransY != 0f) myMatrix!!.postTranslate(fittedTransX, fittedTransY)
+        if (fittedTransX != 0f || fittedTransY != 0f) myMatrix?.postTranslate(fittedTransX, fittedTransY)
     }
 
     private fun getFittedTranslation(mTranslate: Float,vSize: Float, cSize: Float): Float {
@@ -163,8 +160,8 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
         }
     }
     override fun onTouch(mView: View, mMouseEvent: MotionEvent): Boolean {
-        myScaleDetector!!.onTouchEvent(mMouseEvent)
-        myGestureDetector!!.onTouchEvent(mMouseEvent)
+        myScaleDetector?.onTouchEvent(mMouseEvent)
+        myGestureDetector?.onTouchEvent(mMouseEvent)
         val currentPoint = PointF(mMouseEvent.x, mMouseEvent.y)
 
         val mDisplay = this.display
@@ -183,7 +180,7 @@ class ZoomableImage : AppCompatImageView, View.OnTouchListener, GestureDetector.
                 val changeInY = currentPoint.y - lastPoint.y
                 val fixedTranslationX = getFixDragTrans(changeInX, mViewedWidth.toFloat(), originalWidth * presentScale)
                 val fixedTranslationY = getFixDragTrans(changeInY, mViewedHeight.toFloat(), originalHeight * presentScale)
-                myMatrix!!.postTranslate(fixedTranslationX, fixedTranslationY)
+                myMatrix?.postTranslate(fixedTranslationX, fixedTranslationY)
                 fittedTranslation()
                 lastPoint[currentPoint.x] = currentPoint.y
             }
