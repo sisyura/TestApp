@@ -16,4 +16,10 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+    <style name="newsDetailText" parent="">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

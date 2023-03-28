@@ -3,7 +3,9 @@ package com.example.testapp.ui.home.NewsDetail
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.data.entity.ItemCharacter
 import com.example.testapp.databinding.FragmentNewsDetailBinding
@@ -45,6 +47,13 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>(FragmentNewsD
                 } else {
                     saveBtn.setImageResource(R.drawable.ic_not_save)
                 }
+            }
+            image.setOnClickListener {
+                val bundle = bundleOf("characterImage" to character.image)
+                findNavController().navigate(
+                    R.id.characterImageDetailFragment,
+                    bundle
+                )
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.testapp
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -33,6 +34,18 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.newsDetailFragment ||
+                destination.id == R.id.characterImageDetailFragment ||
+                destination.id == R.id.registerFragment ||
+                destination.id == R.id.loginFragment
+            ) {
+                navView.visibility = View.GONE
+            } else {
+                navView.visibility = View.VISIBLE
+            }
+        }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

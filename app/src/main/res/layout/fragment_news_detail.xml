@@ -14,13 +14,12 @@
 
         <ImageView
             android:id="@+id/save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:contentDescription="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image"
-            tools:srcCompat="@drawable/ic_not_save"
-            android:layout_marginTop="8dp" />
+            tools:srcCompat="@drawable/ic_not_save" />
 
         <ImageView
             android:id="@+id/image"
@@ -44,14 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_name"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="name"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
         <LinearLayout
@@ -67,14 +66,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_gender"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="gender"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
         <LinearLayout
@@ -90,14 +89,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_status"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="status"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
         <LinearLayout
@@ -113,14 +112,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_species"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/species"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="species"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
         <LinearLayout
@@ -136,14 +135,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_born"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/born"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="born"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
         <LinearLayout
@@ -159,14 +158,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_location"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
             <TextView
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="location"
                 android:layout_marginStart="8dp"
-                style="@style/body"/>
+                style="@style/newsDetailText"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
