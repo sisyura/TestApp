@@ -74,7 +74,6 @@
     <fragment
         android:id="@+id/newsDetailFragment"
         android:name="com.example.testapp.ui.home.NewsDetail.NewsDetailFragment"
-        android:label=""
         tools:layout="@layout/fragment_news_detail">
         <action
             android:id="@+id/action_newsDetailFragment_to_characterImageDetailFragment"
@@ -83,6 +82,5 @@
     <fragment
         android:id="@+id/characterImageDetailFragment"
         android:name="com.example.testapp.ui.home.NewsDetail.CharacterImageDetailFragment"
-        android:label=""
         tools:layout="@layout/fragment_character_image_detail"/>
 </navigation>

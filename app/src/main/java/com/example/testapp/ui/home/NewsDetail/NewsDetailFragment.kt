@@ -50,6 +50,7 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>(FragmentNewsD
             }
             image.setOnClickListener {
                 val bundle = bundleOf("characterImage" to character.image)
+                findNavController().findDestination(R.id.characterImageDetailFragment)?.label = character.name
                 findNavController().navigate(
                     R.id.characterImageDetailFragment,
                     bundle

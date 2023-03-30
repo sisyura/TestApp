@@ -32,6 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             viewModel.isSaved(it.id)
             it.isSaved = viewModel.isSaved
             val bundle = bundleOf("character" to it)
+            findNavController().findDestination(R.id.newsDetailFragment)?.label = it.name
             findNavController().navigate(R.id.action_navigation_home_to_newsDetailFragment, bundle)
         }
     }

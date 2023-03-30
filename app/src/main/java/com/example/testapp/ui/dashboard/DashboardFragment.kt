@@ -45,6 +45,7 @@ class DashboardFragment :
                 true
             )
             val bundle = bundleOf("character" to character)
+            findNavController().findDestination(R.id.newsDetailFragment)?.label = character.name
             findNavController().navigate(
                 R.id.action_navigation_dashboard_to_newsDetailFragment2,
                 bundle
