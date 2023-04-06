@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/characterRV"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="56dp"
-        tools:listitem="@layout/item_character"/>
+        android:id="@+id/swiperefreshlayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/characterRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="56dp"
+            tools:listitem="@layout/item_character"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
