@@ -15,8 +15,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         binding.apply {
             buttonRegister.setOnClickListener {
                 register(
-                    editTextEmailAddress.text.toString(),
-                    editTextPassword.text.toString()
+                    editTextRegisterEmailAddress.text.toString(),
+                    editTextRegisterPassword.text.toString(),
+                    editTextPasswordRepeat.text.toString()
                 )
             }
 
@@ -24,23 +25,32 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
     }
 
-    private fun register(email: String, password: String) {
-        try {
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
+    private fun register(email: String, password: String, passwordRepeat: String) {
+        if (password == passwordRepeat) {
+            try {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(context, "Проверьте правильность введенных данных.", Toast.LENGTH_LONG).show()
                 }
-            }.addOnFailureListener {
-                Toast.makeText(context, "Проверьте правильность введенных данных.", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    context,
+                    "Введите адрес электронной почты и пароль.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } else {
             Toast.makeText(
                 context,
-                "Введите адрес электронной почты и пароль.",
+                "Пароли должны совпадать.",
                 Toast.LENGTH_LONG
             ).show()
         }
+
     }
 
     private fun goToLogin() {

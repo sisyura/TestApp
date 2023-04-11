@@ -2,6 +2,7 @@ package com.example.testapp.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,12 +36,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             findNavController().findDestination(R.id.newsDetailFragment)?.label = it.name
             findNavController().navigate(R.id.action_navigation_home_to_newsDetailFragment, bundle)
         }
+        binding.apply {
+            swipeRefreshLayout.setOnRefreshListener {
+                fetchCharacterItems()
+
+                if (context?.let { viewModel.isOnline(it) } == false) {
+                    Toast.makeText(context, getString(R.string.no_connection), Toast.LENGTH_LONG)
+                        .show()
+                }
+                swipeRefreshLayout.isRefreshing = false
+            }
+            if (context?.let { viewModel.isOnline(it) } == false) {
+                tvOffline.visibility = View.VISIBLE
+                characterRV.visibility = View.GONE
+            } else {
+                tvOffline.visibility = View.GONE
+                characterRV.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun fetchCharacterItems() {
         lifecycleScope.launch {
             viewModel.getCharactersListFlow().distinctUntilChanged().collectLatest {
                 characterAdapter.submitData(it)
+                binding.characterRV.invalidate()
+
             }
         }
     }

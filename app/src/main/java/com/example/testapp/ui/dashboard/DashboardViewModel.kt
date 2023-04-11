@@ -1,7 +1,5 @@
 package com.example.testapp.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.testapp.data.CharactersRepository
 import com.example.testapp.data.entity.ItemCharacterDB

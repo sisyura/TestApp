@@ -26,4 +26,20 @@
     <string name="hint_born">Место рождения:</string>
     <string name="hint_location">Местонахождение:</string>
     <string name="save">save</string>
+    <string name="no_connection">Отсутствует подключение к интернету!</string>
+    <string name="reset_password">Восстановление пароля!</string>
+    <string name="entry_email">Введите email</string>
+    <string name="cancel">Отмена</string>
+    <string name="apply">ОК</string>
+    <string name="email">Email</string>
+    <string name="password">Введите пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="register">Регистрация</string>
+    <string name="do_you_have_an_account">Уже зарегестрированы?</string>
+    <string name="login">Войти</string>
+    <string name="register_btn">Зарегистрироваться</string>
+    <string name="no_account">Нет аккаунта?</string>
+    <string name="reset_btn">Восстановить</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login_btn">LOGIN</string>
 </resources>
