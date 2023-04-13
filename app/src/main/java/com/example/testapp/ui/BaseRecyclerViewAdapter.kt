@@ -37,6 +37,7 @@ abstract class BaseRecyclerViewAdapter<T, VB: ViewBinding> : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         holder.bind(position)
     }
 

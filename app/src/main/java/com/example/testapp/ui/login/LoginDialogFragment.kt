@@ -1,31 +1,36 @@
 package com.example.testapp.ui.login
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentLoginBinding
-import com.example.testapp.ui.BaseFragment
+import com.example.testapp.ui.BaseDialogFragment
+import com.example.testapp.ui.notifications.NotificationsViewModel
+import com.example.testapp.ui.register.RegisterDialogFragment
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class LoginDialogFragment :
+    BaseDialogFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
+    private lateinit var dialogReset: Dialog
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel : NotificationsViewModel by activityViewModels()
 
-    private lateinit var dialog : Dialog
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding.apply {
             buttonLogin.setOnClickListener {
                 login(
@@ -33,35 +38,43 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     editTextPassword.text.toString()
                 )
             }
-
-            textViewRegister.setOnClickListener { goToRegister() }
+            textViewRegister.setOnClickListener {
+                viewModel.sendTag(TAG)
+            }
             tvReset.setOnClickListener {
-                dialog = Dialog(requireActivity())
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.setContentView(R.layout.dialog_reset_password)
-                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                val btnApply: Button = dialog.findViewById(R.id.btnApply)
-                val btnCancel: Button = dialog.findViewById(R.id.btnCancel)
-                val etEmail: EditText = dialog.findViewById(R.id.etEmail)
+                dialogReset = Dialog(requireActivity())
+                dialogReset.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogReset.setContentView(R.layout.dialog_reset_password)
+                dialogReset.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                val btnApply: Button = dialogReset.findViewById(R.id.btnApply)
+                val btnCancel: Button = dialogReset.findViewById(R.id.btnCancel)
+                val etEmail: EditText = dialogReset.findViewById(R.id.etEmail)
                 btnCancel.setOnClickListener {
-                    dialog.dismiss()
+                    dialogReset.dismiss()
                 }
                 btnApply.setOnClickListener {
                     context?.let { it1 -> resetMyPassword(etEmail.text.toString(), it1, auth) }
                 }
-                dialog.show()
+                dialogReset.show()
             }
         }
+        return AlertDialog.Builder(requireActivity())
+            .setView(binding.root)
+            .create()
     }
 
     private fun login(email: String, password: String) {
         try {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_loginFragment_to_navigation_notifications)
+                    dismiss()
                 }
             }.addOnFailureListener {
-                Toast.makeText(context, "Проверьте правильность введенных данных.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Проверьте правильность введенных данных.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -73,15 +86,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
     }
 
-    private fun goToRegister() {
-        findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-    }
-
     private fun resetMyPassword(email: String, context: Context, auth: FirebaseAuth) {
         try {
             auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    dialog.dismiss()
+                    dialogReset.dismiss()
                     Toast.makeText(
                         context,
                         "Инструкция для восстановления пароля отправлена вам на почту.",
@@ -103,5 +112,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    companion object {
+
+        const val TAG = "LoginDialogFragment"
+
+        fun newInstance(): LoginDialogFragment {
+            return LoginDialogFragment()
+        }
+
     }
 }

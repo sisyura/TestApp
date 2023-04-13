@@ -15,11 +15,6 @@ class CharactersAdapter :
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> ItemCharacterBinding
         get() = ItemCharacterBinding::inflate
 
-    fun setData(list: List<ItemCharacterDB>) {
-        items.clear()
-        items.addAll(list)
-    }
-
     @SuppressLint("SetTextI18n")
     override fun bind(item: ItemCharacterDB, view: View, position: Int) {
         super.bind(item, view, position)

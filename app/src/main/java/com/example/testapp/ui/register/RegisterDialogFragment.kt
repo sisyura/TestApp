@@ -1,17 +1,29 @@
 package com.example.testapp.ui.register
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentRegisterBinding
-import com.example.testapp.ui.BaseFragment
+import com.example.testapp.ui.BaseDialogFragment
+import com.example.testapp.ui.home.HomeViewModel
+import com.example.testapp.ui.login.LoginDialogFragment
+import com.example.testapp.ui.notifications.NotificationsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
+@AndroidEntryPoint
+class RegisterDialogFragment : BaseDialogFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private val viewModel : NotificationsViewModel by activityViewModels()
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding.apply {
             buttonRegister.setOnClickListener {
                 register(
@@ -21,8 +33,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 )
             }
 
-            textViewLogin.setOnClickListener { goToLogin() }
+            textViewLogin.setOnClickListener {
+                viewModel.sendTag(TAG)
+            }
         }
+        return AlertDialog.Builder(requireActivity())
+            .setView(binding.root)
+            .create()
     }
 
     private fun register(email: String, password: String, passwordRepeat: String) {
@@ -30,7 +47,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             try {
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        findNavController().navigate(R.id.action_registerFragment_to_navigation_notifications)
+                        dismiss()
+                        Toast.makeText(context, "Регистрация прошла успешно.", Toast.LENGTH_LONG).show()
                     }
                 }.addOnFailureListener {
                     Toast.makeText(context, "Проверьте правильность введенных данных.", Toast.LENGTH_LONG).show()
@@ -50,10 +68,15 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 Toast.LENGTH_LONG
             ).show()
         }
-
     }
 
-    private fun goToLogin() {
-        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+    companion object {
+
+        const val TAG = "RegisterDialogFragment"
+
+        fun newInstance(): RegisterDialogFragment {
+            return RegisterDialogFragment()
+        }
+
     }
 }
