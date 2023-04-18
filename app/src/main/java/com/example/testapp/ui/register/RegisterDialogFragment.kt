@@ -3,25 +3,19 @@ package com.example.testapp.ui.register
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.testapp.R
 import com.example.testapp.databinding.FragmentRegisterBinding
 import com.example.testapp.ui.BaseDialogFragment
-import com.example.testapp.ui.home.HomeViewModel
 import com.example.testapp.ui.login.LoginDialogFragment
 import com.example.testapp.ui.notifications.NotificationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterDialogFragment : BaseDialogFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
+class RegisterDialogFragment :
+    BaseDialogFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
 
-    private val viewModel : NotificationsViewModel by activityViewModels()
+    private val viewModel: NotificationsViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding.apply {
@@ -34,7 +28,7 @@ class RegisterDialogFragment : BaseDialogFragment<FragmentRegisterBinding>(Fragm
             }
 
             textViewLogin.setOnClickListener {
-                viewModel.sendTag(TAG)
+                viewModel.sendTag(LoginDialogFragment.TAG)
             }
         }
         return AlertDialog.Builder(requireActivity())
@@ -48,10 +42,15 @@ class RegisterDialogFragment : BaseDialogFragment<FragmentRegisterBinding>(Fragm
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         dismiss()
-                        Toast.makeText(context, "Регистрация прошла успешно.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Регистрация прошла успешно.", Toast.LENGTH_LONG)
+                            .show()
                     }
                 }.addOnFailureListener {
-                    Toast.makeText(context, "Проверьте правильность введенных данных.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Проверьте правильность введенных данных.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
