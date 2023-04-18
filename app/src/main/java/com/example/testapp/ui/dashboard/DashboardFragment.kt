@@ -52,7 +52,7 @@ class DashboardFragment : Fragment() {
                 Conversation()
             }
         }
-        //testcommit12
+        viewModel.apply {  }
     }
 
     @Composable
