@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvNewTask"
+        android:gravity="center"
+        android:text="@string/new_task"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/dialogTitle"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etTask"
+        android:maxLines="1"
+        android:hint="@string/edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/tvNewTask"
+        app:layout_constraintStart_toStartOf="@+id/tvNewTask"
+        app:layout_constraintEnd_toEndOf="@+id/tvNewTask"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCancel"
+        android:text="@string/cancel"
+        app:layout_constraintTop_toBottomOf="@+id/etTask"
+        app:layout_constraintStart_toStartOf="@+id/tvNewTask"
+        android:layout_marginStart="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnApply"
+        android:text="@string/apply"
+        app:layout_constraintTop_toBottomOf="@+id/etTask"
+        app:layout_constraintEnd_toEndOf="@+id/tvNewTask"
+        android:layout_marginEnd="5dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

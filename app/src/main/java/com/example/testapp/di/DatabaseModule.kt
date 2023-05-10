@@ -3,6 +3,7 @@ package com.example.testapp.di
 import android.content.Context
 import com.example.testapp.data.AppDatabase
 import com.example.testapp.data.CharactersDao
+import com.example.testapp.data.PlannerDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +25,10 @@ class DatabaseModule {
     fun provideCharactersDao(appDatabase: AppDatabase) : CharactersDao {
         return appDatabase.CharactersDao()
     }
+
+    @Provides
+    fun providePlannerDao(appDatabase: AppDatabase) = appDatabase.PlannerDao()
+
+    @Provides
+    fun provideChildPlannerDao(appDatabase: AppDatabase) = appDatabase.ChildPlannerDao()
 }

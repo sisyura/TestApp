@@ -42,4 +42,7 @@
     <string name="reset_btn">Восстановить</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="login_btn">LOGIN</string>
+    <string name="title_planner">Planner</string>
+    <string name="new_task">Новая задача</string>
+    <string name="edit_text">Введите текст</string>
 </resources>

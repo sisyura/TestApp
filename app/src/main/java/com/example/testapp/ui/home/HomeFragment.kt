@@ -56,6 +56,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCharactersListFlow().onEach {
+
+        }
+    }
+
     private fun fetchCharacterItems() {
         lifecycleScope.launch {
             viewModel.getCharactersListFlow().distinctUntilChanged().collectLatest {

@@ -83,4 +83,10 @@
         android:id="@+id/characterImageDetailFragment"
         android:name="com.example.testapp.ui.home.NewsDetail.CharacterImageDetailFragment"
         tools:layout="@layout/fragment_character_image_detail"/>
+
+    <fragment
+        android:id="@+id/navigation_planner"
+        android:name="com.example.testapp.ui.planner.PlannerFragment"
+        tools:layout="@layout/fragment_planner"
+        app:route="planner"/>
 </navigation>

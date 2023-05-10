@@ -31,15 +31,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_planner, R.id.navigation_notifications
             )
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.newsDetailFragment ||
-                destination.id == R.id.characterImageDetailFragment ||
-                destination.id == R.id.registerFragment ||
-                destination.id == R.id.loginFragment
+                destination.id == R.id.characterImageDetailFragment
             ) {
                 navView.visibility = View.GONE
             } else {

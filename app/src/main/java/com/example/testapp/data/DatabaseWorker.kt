@@ -5,13 +5,14 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.testapp.data.entity.ItemCharacterDB
+import com.example.testapp.data.entity.PlannerDB
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class SeedDatabaseWorker(
+class DatabaseWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
@@ -23,9 +24,11 @@ class SeedDatabaseWorker(
                     JsonReader(inputStream.reader()).use { jsonReader ->
                         val characterType = object : TypeToken<ItemCharacterDB>() {}.type
                         val character: ItemCharacterDB = Gson().fromJson(jsonReader, characterType)
-
+                        val plannerType = object : TypeToken<PlannerDB>() {}.type
+                        val planner : PlannerDB = Gson().fromJson(jsonReader, plannerType)
                         val database = AppDatabase.getInstance(applicationContext)
                         database.CharactersDao().insertCharacter(character)
+                        database.PlannerDao().insertPlanner(planner)
                         Result.success()
                     }
                 }
