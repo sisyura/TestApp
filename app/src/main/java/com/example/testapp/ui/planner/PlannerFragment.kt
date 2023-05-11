@@ -6,17 +6,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapp.data.entity.AllPlanner
-import com.example.testapp.data.entity.ChildPlannerDB
-import com.example.testapp.data.entity.PlannerDB
 import com.example.testapp.databinding.FragmentPlannerBinding
 import com.example.testapp.ui.BaseFragment
 import com.example.testapp.ui.planner.child_planner.AddChildTicketDialogFragment
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
 class PlannerFragment : BaseFragment<FragmentPlannerBinding>(FragmentPlannerBinding::inflate) {
@@ -78,15 +72,15 @@ class PlannerFragment : BaseFragment<FragmentPlannerBinding>(FragmentPlannerBind
                         allPlanner.add(
                             AllPlanner(
                                 planner.id,
-                                planner.body!!,
-                                planner.date!!,
-                                childSortList
+                                planner.body,
+                                planner.date,
+                                childSortList.sortedBy { it.date }
                             )
                         )
                     }
-                    return@combine allPlanner
+                    return@combine allPlanner.sortedBy { it.date }
                 }.collectLatest {
-                    plannerAdapter.items = it
+                    plannerAdapter.items = it.toMutableList()
                 }
         }
     }
