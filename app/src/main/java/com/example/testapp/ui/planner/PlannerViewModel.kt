@@ -9,10 +9,7 @@ import com.example.testapp.data.entity.ItemCharacter
 import com.example.testapp.data.entity.PlannerDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,12 +20,6 @@ class PlannerViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var myDialogTag = MutableLiveData<String>()
-    private var allPlannerListLiveData = MutableLiveData<MutableList<AllPlanner>>()
-
-    private var plannerList: MutableList<PlannerDB> = mutableListOf()
-    private var childPlannerList: MutableList<ChildPlannerDB> = mutableListOf()
-    private var childIndividualPlannerList: MutableList<ChildPlannerDB> = mutableListOf()
-    private var allPlannerList: MutableList<AllPlanner> = mutableListOf()
 
     init {
         getPlanner()
@@ -56,6 +47,7 @@ class PlannerViewModel @Inject constructor(
         viewModelScope.launch {
             delay(500)
             repository.removePlanner(id)
+            childRepository.removePlannerByParenId(id)
         }
     }
 
@@ -68,32 +60,10 @@ class PlannerViewModel @Inject constructor(
         }
     }
 
-    fun removeChildTicket(id: Int) {
+    fun removeChildTicket(childId: Int) {
         viewModelScope.launch {
             delay(500)
-            childRepository.removePlanner(id)
+            childRepository.removePlanner(childId)
         }
     }
-
-//    suspend fun setAllPlannerList() : MutableList<AllPlanner> {
-//        allPlannerList.clear()
-//        for (planner in plannerList) {
-//            childIndividualPlannerList.clear()
-//            for (childPlanner in childPlannerList) {
-//                if (childPlanner.parentId == planner.id) {
-//                    childIndividualPlannerList.add(childPlanner)
-//                }
-//            }
-//            allPlannerList.add(AllPlanner(id = planner.id, body = planner.body!!, date = planner.date!!, child = childIndividualPlannerList))
-//            delay(200L)
-//        }
-//        childIndividualPlannerList.clear()
-//        return allPlannerList
-////        allPlannerListLiveData.value = allPlannerList
-//    }
-//
-//    fun getAllPlannerList(): LiveData<MutableList<AllPlanner>> {
-//        return allPlannerListLiveData
-//    }
-
 }

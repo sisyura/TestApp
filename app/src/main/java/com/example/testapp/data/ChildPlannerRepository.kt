@@ -12,6 +12,7 @@ class ChildPlannerRepository @Inject constructor(private val childPlannerDao: Ch
     suspend fun createPlanner(childPlanner: ChildPlannerDB) = childPlannerDao.insertPlanner(childPlanner)
 
     suspend fun removePlanner(id: Int) = childPlannerDao.deletePlanner(id)
+    suspend fun removePlannerByParenId(parentId: Int) = childPlannerDao.deletePlannerByParentId(parentId)
 
     companion object {
         @Volatile private var instance: ChildPlannerRepository? = null

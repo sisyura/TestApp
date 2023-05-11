@@ -11,24 +11,17 @@ import com.example.testapp.databinding.ItemPlannerBinding
 import com.example.testapp.ui.BaseRecyclerViewAdapter
 import com.example.testapp.ui.planner.child_planner.ChildPlannerAdapter
 
-class PlannerAdapter : BaseRecyclerViewAdapter<PlannerDB, ItemPlannerBinding>() {
+class PlannerAdapter : BaseRecyclerViewAdapter<AllPlanner, ItemPlannerBinding>() {
 
     var childAddListener: ((parentId : Int) -> Unit)? = null
-
-    private val childPlannerAdapter = ChildPlannerAdapter()
-    var childItems :MutableList<ChildPlannerDB> = mutableListOf()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
-
+    var childDeleteListener: ((childId : Int) -> Unit)? = null
 
     var checkListener = false
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> ItemPlannerBinding
         get() = ItemPlannerBinding::inflate
 
-    override fun bind(item: PlannerDB, view: View, position: Int) {
+    override fun bind(item: AllPlanner, view: View, position: Int) {
         super.bind(item, view, position)
         binding.apply {
             tvPlanner.text = item.body
@@ -39,13 +32,18 @@ class PlannerAdapter : BaseRecyclerViewAdapter<PlannerDB, ItemPlannerBinding>() 
             addChildBtn.setOnClickListener {
                 childAddListener?.invoke(item.id)
             }
+            val childPlannerAdapter = ChildPlannerAdapter()
             rvPlanner.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = childPlannerAdapter
             }
-//            item.child?.let {
-//                childPlannerAdapter.items = it.toMutableList()
-//            }
+            if (item.child.isNotEmpty()) {
+                childPlannerAdapter.items = item.child.toMutableList()
+            }
+            childPlannerAdapter.listener = {
+                if (childPlannerAdapter.checkListener)
+                    childDeleteListener?.invoke(it.id)
+            }
         }
     }
 

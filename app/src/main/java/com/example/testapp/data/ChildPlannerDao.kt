@@ -17,6 +17,9 @@ interface ChildPlannerDao {
     @Query("DELETE FROM planner_child WHERE id = :id")
     suspend fun deletePlanner(id: Int)
 
+    @Query("DELETE FROM planner_child WHERE parentId = :parentId")
+    suspend fun deletePlannerByParentId(parentId: Int)
+
     @Insert
     suspend fun insertPlanner(childPlanner: ChildPlannerDB) : Long
 }
