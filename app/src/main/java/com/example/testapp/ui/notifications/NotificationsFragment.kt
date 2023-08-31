@@ -12,32 +12,61 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NotificationsFragment :
-    BaseFragment<FragmentNotificationsBinding>(FragmentNotificationsBinding::inflate) {
+    BaseFragment<FragmentNotificationsBinding>(FragmentNotificationsBinding::inflate),
+    RegisterDialogFragment.GoToLoginClickListener,
+    LoginDialogFragment.GoToResetPassClickListener,
+    LoginDialogFragment.GoToRegisterClickListener,
+    ResetPassDialogFragment.DismissResetPassListener {
 
-    private val viewModel: NotificationsViewModel by activityViewModels()
+//    private val viewModel: NotificationsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnAuth.setOnClickListener {
             LoginDialogFragment.newInstance().show(childFragmentManager, LoginDialogFragment.TAG)
         }
-        viewModel.getTag().observe(viewLifecycleOwner) {
+//        viewModel.getTag().observe(viewLifecycleOwner) {
+//
+//            when (it) {
+//                RegisterDialogFragment.TAG -> {
+//                    (childFragmentManager.findFragmentByTag(LoginDialogFragment.TAG) as? LoginDialogFragment)?.dismiss()
+//                    RegisterDialogFragment.newInstance()
+//                        .show(childFragmentManager, RegisterDialogFragment.TAG)
+//                }
+//
+//                LoginDialogFragment.TAG -> {
+//                    (childFragmentManager.findFragmentByTag(RegisterDialogFragment.TAG) as? RegisterDialogFragment)?.dismiss()
+//                    (childFragmentManager.findFragmentByTag(ResetPassDialogFragment.TAG) as? ResetPassDialogFragment)?.dismiss()
+//                    LoginDialogFragment.newInstance()
+//                        .show(childFragmentManager, LoginDialogFragment.TAG)
+//                }
+//
+//                ResetPassDialogFragment.TAG -> {
+//                    (childFragmentManager.findFragmentByTag(LoginDialogFragment.TAG) as? LoginDialogFragment)?.dismiss()
+//                    ResetPassDialogFragment.newInstance()
+//                        .show(childFragmentManager, ResetPassDialogFragment.TAG)
+//                }
+//            }
+//        }
+    }
 
-            when (it) {
-                RegisterDialogFragment.TAG -> {
-                    (childFragmentManager.findFragmentByTag(LoginDialogFragment.TAG) as? LoginDialogFragment)?.dismiss()
-                    RegisterDialogFragment.newInstance().show(childFragmentManager, RegisterDialogFragment.TAG)
-                }
-                LoginDialogFragment.TAG -> {
-                    (childFragmentManager.findFragmentByTag(RegisterDialogFragment.TAG) as? RegisterDialogFragment)?.dismiss()
-                    (childFragmentManager.findFragmentByTag(ResetPassDialogFragment.TAG) as? ResetPassDialogFragment)?.dismiss()
-                    LoginDialogFragment.newInstance().show(childFragmentManager, LoginDialogFragment.TAG)
-                }
-                ResetPassDialogFragment.TAG -> {
-                    (childFragmentManager.findFragmentByTag(LoginDialogFragment.TAG) as? LoginDialogFragment)?.dismiss()
-                    ResetPassDialogFragment.newInstance().show(childFragmentManager, ResetPassDialogFragment.TAG)
-                }
-            }
-        }
+    override fun goToLoginClick() {
+        LoginDialogFragment.newInstance()
+            .show(childFragmentManager, LoginDialogFragment.TAG)
+    }
+
+    override fun goToRegisterClick() {
+        RegisterDialogFragment.newInstance()
+            .show(childFragmentManager, RegisterDialogFragment.TAG)
+    }
+
+    override fun goToResetPassClick() {
+        ResetPassDialogFragment.newInstance()
+            .show(childFragmentManager, ResetPassDialogFragment.TAG)
+    }
+
+    override fun dismissResetPass() {
+        LoginDialogFragment.newInstance()
+            .show(childFragmentManager, LoginDialogFragment.TAG)
     }
 }

@@ -21,7 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginDialogFragment :
     BaseDialogFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-    private val viewModel: NotificationsViewModel by activityViewModels()
+    interface GoToRegisterClickListener {
+        fun goToRegisterClick()
+    }
+
+    interface GoToResetPassClickListener {
+        fun goToResetPassClick()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -34,10 +40,12 @@ class LoginDialogFragment :
                 )
             }
             textViewRegister.setOnClickListener {
-                viewModel.sendTag(RegisterDialogFragment.TAG)
+                (parentFragment as GoToRegisterClickListener).goToRegisterClick()
+                dismiss()
             }
             tvReset.setOnClickListener {
-                viewModel.sendTag(ResetPassDialogFragment.TAG)
+                (parentFragment as GoToResetPassClickListener).goToResetPassClick()
+                dismiss()
             }
         }
         return AlertDialog.Builder(requireActivity())

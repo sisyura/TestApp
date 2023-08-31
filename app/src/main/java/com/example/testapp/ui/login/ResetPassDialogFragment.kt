@@ -17,14 +17,17 @@ import com.google.firebase.auth.FirebaseAuth
 class ResetPassDialogFragment :
     BaseDialogFragment<DialogResetPasswordBinding>(DialogResetPasswordBinding::inflate) {
 
-    private val viewModel: NotificationsViewModel by activityViewModels()
+    interface DismissResetPassListener {
+        fun dismissResetPass()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding.apply {
             btnCancel.setOnClickListener {
-                viewModel.sendTag(LoginDialogFragment.TAG)
+                (parentFragment as DismissResetPassListener).dismissResetPass()
+                dismiss()
             }
             btnApply.setOnClickListener {
                 context?.let { it1 -> resetMyPassword(etEmail.text.toString(), it1, auth) }

@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegisterDialogFragment :
     BaseDialogFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
 
-    private val viewModel: NotificationsViewModel by activityViewModels()
+    interface GoToLoginClickListener {
+        fun goToLoginClick()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding.apply {
@@ -28,7 +30,8 @@ class RegisterDialogFragment :
             }
 
             textViewLogin.setOnClickListener {
-                viewModel.sendTag(LoginDialogFragment.TAG)
+                (parentFragment as GoToLoginClickListener).goToLoginClick()
+                dismiss()
             }
         }
         return AlertDialog.Builder(requireActivity())
