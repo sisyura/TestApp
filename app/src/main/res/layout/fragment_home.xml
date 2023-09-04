@@ -5,17 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/swipeRefreshLayout">
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/characterRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="56dp"
+            android:paddingStart="-70dp"
             tools:listitem="@layout/item_character"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingStart="-70dp"
+        android:id="@+id/swipeRefreshLayout">
+
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
